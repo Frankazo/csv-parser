@@ -1,7 +1,7 @@
 {
-  "name": "MonolithStarter-static",
+  "name": "csv-parser",
   "version": "0.0.1",
-  "description": "Description for MonolithStarter",
+  "description": "Assigment from Validity",
   "private": true,
   "license": "UNLICENSED",
   "cacheDirectories": [
