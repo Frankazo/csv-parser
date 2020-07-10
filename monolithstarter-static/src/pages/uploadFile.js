@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import csv2json from './parser';
+import {csvObj, LevenshteinDistance} from './parser';
 
 // component to handle file uploading and csv parsing
 export default class UploadFile  extends Component {
@@ -7,7 +7,10 @@ export default class UploadFile  extends Component {
       super(props);
       this.uploadFile = this.uploadFile.bind(this);
       this.state = {
-          json: null
+          original: null,
+          json: null,
+          uniques: null,
+          duplicates: null
       };
     }
 
@@ -18,16 +21,33 @@ export default class UploadFile  extends Component {
           data.append('file', file);
           const reader = new FileReader();
           reader.onload = (event) => {
-            const json = csv2json(event.target.result);
-            this.setState({ json });
+            const result = csvObj(event.target.result);
+            this.setState({ original: result, json: JSON.stringify(result) });
+            const uniqueArray = result.filter((item, index) => {
+              const fName = JSON.stringify(item.first_name);
+              const lName = JSON.stringify(item.last_name);
+              const val = result.findIndex(obj => {
+                if (LevenshteinDistance(JSON.stringify(obj.first_name), fName) > 2 || LevenshteinDistance(JSON.stringify(obj.last_name), lName) > 2) {
+                    return false;
+                }
+                return true;
+              });
+              if ( index === val ) {
+                  return true;
+              } else {
+                  console.log(item);
+                  console.log(result[val]);
+                  return false;
+              }
+            });
+            this.setState({ uniques: uniqueArray });
           };
-
           reader.readAsText(file);
         }
     }
 
     render() {
-        const { json } = this.state;
+        const { original, json, uniques, duplicates } = this.state;
       return(
         <div className="Upload">
           {!json ? (<span>
@@ -35,7 +55,9 @@ export default class UploadFile  extends Component {
           name="myFile"
           onChange={this.uploadFile} />
           </span>) :
-          <div>{json}</div> }
+         <div>
+            <div>{json}</div>
+         </div> }
         </div>
     );
     }

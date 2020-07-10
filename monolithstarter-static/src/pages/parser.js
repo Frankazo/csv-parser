@@ -2,7 +2,7 @@
 // receives the Csv file and turns it into a JSON object
 
 // Compute the edit distance between the two given strings
-const LevenshteinDistance =  function(a, b){
+export  const LevenshteinDistance =  function(a, b){
             if(a.length === 0) return b.length;
             if(b.length === 0) return a.length;
 
@@ -36,7 +36,8 @@ const LevenshteinDistance =  function(a, b){
         return matrix[b.length][a.length];
 };
 
-export default function csvJSON(csv){
+// receives the Csv file and turns it into a Js object
+export function csvObj(csv){
     const lines=csv.split("\n");
     const result = [];
     const headers = lines[0].split(",");
@@ -80,24 +81,5 @@ export default function csvJSON(csv){
 
       result.push(obj);
     }
-
-    // Checks for duplicates
-    // Creating two different arrays, one with non duplicates and another one with duplicates
-    // what element can be compare to identify duplicates
-    // first_name, last_name, email
-    // const namesArray = result.map(function(item){ return item.first_name; });
-    const uniqueArray = result.filter((item, index) => {
-      const _thing = JSON.stringify(item.first_name);
-      return index === result.findIndex(obj => {
-        if (LevenshteinDistance(JSON.stringify(obj.first_name), _thing) > 2) {
-            return false;
-        }
-        return true;
-      });
-    });
-    console.log(uniqueArray);
-    // print the two arrays list
-    //return result; //JavaScript object
-    console.log(result);
-    return JSON.stringify(result);
+    return result;
 };
