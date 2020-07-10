@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import csv2json from './parser';
 
+// component to handle file uploading and csv parsing
 export default class UploadFile  extends Component {
     constructor(props) {
       super(props);
@@ -9,41 +10,35 @@ export default class UploadFile  extends Component {
           json: null
       };
     }
+
     uploadFile(event) {
-        let file = event.target.files[0];
-        console.log(file);
+        const file = event.target.files[0];
         if (file) {
-          let data = new FormData();
+          const data = new FormData();
           data.append('file', file);
           const reader = new FileReader();
           reader.onload = (event) => {
-            const text = event.target.result;
-            const json = csv2json(text);
+            const json = csv2json(event.target.result);
             this.setState({ json });
           };
 
           reader.readAsText(file);
         }
     }
+    // Make a function that recieves the JSON object and checks for duplicates
+    // Creating two different arrays, one with non duplicates and another one with duplicates
+    // print the two arrays list
 
     render() {
         const { json } = this.state;
-        let jsonJsx = null;
-        if (!json) {
-            jsonJsx = 'Upload file...';
-        } else {
-            jsonJsx = (
-                <div>{json}</div>
-            );
-        }
       return(
         <div className="Upload">
-          <span>
+          {!json ? (<span>
           <input type="file"
           name="myFile"
           onChange={this.uploadFile} />
-          </span>
-          {jsonJsx}
+          </span>) :
+          <div>{json}</div> }
         </div>
     );
     }

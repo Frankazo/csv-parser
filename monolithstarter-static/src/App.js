@@ -9,7 +9,6 @@ class App extends Component {
   render() {
     return (
         <div className="Container">
-        <h1>Csv Parser</h1>
           <Switch>
             <Route key="home" path="/" exact={true} component={HomePage} />
             <Route key="hello" path="/hello" exact={true} component={HelloPage} />
