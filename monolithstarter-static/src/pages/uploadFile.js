@@ -25,9 +25,6 @@ export default class UploadFile  extends Component {
           reader.readAsText(file);
         }
     }
-    // Make a function that recieves the JSON object and checks for duplicates
-    // Creating two different arrays, one with non duplicates and another one with duplicates
-    // print the two arrays list
 
     render() {
         const { json } = this.state;
