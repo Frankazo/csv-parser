@@ -50,14 +50,14 @@ export default class UploadFile  extends Component {
               } else {
                   duplArray.push(item);
                   duplArray.push(result[val]);
-                  // console.log(item);
-                  // console.log(result[val]);
                   return false;
               }
             });
 
             // setting state and turning it into Json to print
             this.setState({ json: JSON.stringify(result), uniques: JSON.stringify(uniqueArray), duplicates: JSON.stringify(duplArray) });
+            console.log(duplArray);
+            console.log(uniqueArray);
           };
           reader.readAsText(file);
         }
