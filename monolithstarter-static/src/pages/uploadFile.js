@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {csvObj, LevenshteinDistance} from './parser';
+import {csvObj, LevenshteinDistance} from '../components/parser';
 
 // component to handle file uploading and csv parsing
 export default class UploadFile  extends Component {
