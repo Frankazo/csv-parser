@@ -9,7 +9,7 @@ class App extends Component {
   render() {
     return (
         <div className="Container">
-        <h1>Csv Parser</h1>
+            <h2>Csv Parser - by Frank Luis-Ravelo</h2>
           <Switch>
             <Route key="home" path="/" exact={true} component={HomePage} />
             <Route key="hello" path="/hello" exact={true} component={HelloPage} />

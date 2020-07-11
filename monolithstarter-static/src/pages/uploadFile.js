@@ -1,49 +1,85 @@
 import React, {Component} from 'react';
-import csv2json from './parser';
+import {csvObj, LevenshteinDistance} from './parser';
 
+// component to handle file uploading and csv parsing
 export default class UploadFile  extends Component {
     constructor(props) {
       super(props);
       this.uploadFile = this.uploadFile.bind(this);
       this.state = {
-          json: null
+          json: null,
+          uniques: null,
+          duplicates: []
       };
     }
+
     uploadFile(event) {
-        let file = event.target.files[0];
-        console.log(file);
+        // get the file from the event
+        const file = event.target.files[0];
+
+        // if file is uploaded
         if (file) {
-          let data = new FormData();
+          const data = new FormData();
           data.append('file', file);
           const reader = new FileReader();
-          reader.onload = (event) => {
-            const text = event.target.result;
-            const json = csv2json(text);
-            this.setState({ json });
-          };
 
+          // when the file is loaded
+          reader.onload = (event) => {
+            // csvObj function gets the csv file and turns it into Js Object
+            const result = csvObj(event.target.result);
+
+            // Array that will contain the duplicate entries
+            const duplArray = [];
+
+            // Array that will contain the unique entries
+            const uniqueArray = result.filter((item, index) => {
+              const fName = JSON.stringify(item.first_name);
+              const lName = JSON.stringify(item.last_name);
+
+              // condition to compare entries using the Levenshtein algorithms
+              const val = result.findIndex(obj => {
+                if (LevenshteinDistance(JSON.stringify(obj.first_name), fName) > 2 || LevenshteinDistance(JSON.stringify(obj.last_name), lName) > 2) {
+                    return false;
+                }
+                return true;
+              });
+
+              // if index number is different we found a duplicate
+              if ( index === val ) {
+                  return true;
+              } else {
+                  duplArray.push(item);
+                  duplArray.push(result[val]);
+                  return false;
+              }
+            });
+
+            // setting state and turning it into Json to print
+            this.setState({ json: JSON.stringify(result), uniques: JSON.stringify(uniqueArray), duplicates: JSON.stringify(duplArray) });
+            console.log(duplArray);
+            console.log(uniqueArray);
+          };
           reader.readAsText(file);
         }
     }
 
     render() {
-        const { json } = this.state;
-        let jsonJsx = null;
-        if (!json) {
-            jsonJsx = 'Upload file...';
-        } else {
-            jsonJsx = (
-                <div>{json}</div>
-            );
-        }
+        const { json, uniques, duplicates } = this.state;
       return(
         <div className="Upload">
-          <span>
+          {!json ? (<span>
           <input type="file"
           name="myFile"
           onChange={this.uploadFile} />
-          </span>
-          {jsonJsx}
+          </span>) :
+         <div>
+            <h2>Uniques</h2>
+            <div>{uniques}</div>
+            <h2>Duplicates</h2>
+            <div>{duplicates}</div>
+            <h2>Original File</h2>
+            <div>{json}</div>
+         </div> }
         </div>
     );
     }

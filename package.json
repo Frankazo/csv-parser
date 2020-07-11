@@ -1,5 +1,5 @@
 {
-  "name": "@validityhq/MonolithStarter",
+  "name": "csv parser",
   "version": "0.0.1",
   "description": "A template of the validity starter app!",
   "author": "Validity",
@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "cypress": "^3.4.0",
+    "gh-pages": "^3.1.0",
     "start-server-and-test": "^1.9.1"
   },
   "scripts": {
