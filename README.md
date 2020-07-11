@@ -5,8 +5,9 @@ Front End app Csv parser, uploading a Csv file to the browser gives you back a J
 
 ## Setup Steps
 
-1. Fork and clone this repository.
-2.
+1. Download this [repository](https://github.com/Frankazo/csv-parser/archive/master.zip).
+2. Unzip file
+3. In terminal
 ```bash
 # Move to the right directory
 cd monolithstarter-static
@@ -19,19 +20,8 @@ npm run start
 ```
 You will now have your frontend running at [localhost:9000](http://localhost:9000/)
 
-To build frontend for production with minification:
-
-```bash
-yarn run build
-```
-
-The build artifacts will be stored in the `build/` directory
-
-## Important Links
-
-- [API Repo](https://github.com/Frankazo/csv-parser)
-- [Deployed Client](https://frankazo.github.io/csv-parser/)
-- [Starter app](https://candidate-take-home.s3.amazonaws.com/simple-app-starter.zip)
+4. Upload Normal.csv File to the browser
+5. See results
 
 ## The Exercise
 
@@ -57,9 +47,9 @@ Ignore the odd dataset, it’s nonsensical and auto-generated. For example, emai
 
 Hit the ground running making pseudo code
 steps to solve the problem
-1. read a csv files
-2. turn csv file into Javascript object
-3. find duplicates and likely duplicate using exising alogorithms (when with Levenshtein distance)
+1. Read a csv files
+2. Turn csv file into Javascript object
+3. Find duplicates and likely duplicates using exising alogorithms (Levenshtein distance)
 4. Print Javascript objects that contain Uniques and duplicate records
 5. Display Json object that contains original, Uniques and duplicate records
 
@@ -75,3 +65,11 @@ steps to solve the problem
 ### Next Steps
 
 - create style components to display data
+
+### Other Resources
+
+- [Starter app](https://candidate-take-home.s3.amazonaws.com/simple-app-starter.zip)
+- https://levelup.gitconnected.com/convert-csv-to-json-in-a-javascript-app-4673575a86aa
+- http://techslides.com/convert-csv-to-json-in-javascript
+- https://stackoverflow.com/questions/55730030/how-to-render-uploaded-csv-file-content-as-json-output-on-react-component
+- https://gist.github.com/jonmaim/7b896cf5c8cfe932a3dd
